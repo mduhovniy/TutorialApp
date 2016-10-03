@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import info.duhovniy.tutorialapp.view.MainActivity;
+import info.duhovniy.tutorialapp.view.PlaceholderFragment;
 import info.duhovniy.tutorialapp.viewmodel.MainViewModel;
 
 /**
@@ -23,7 +23,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return MainActivity.PlaceholderFragment.newInstance(mViewModel.getFragments().get(position));
+        return PlaceholderFragment.newInstance(mViewModel.getFragments().get(position));
     }
 
     @Override

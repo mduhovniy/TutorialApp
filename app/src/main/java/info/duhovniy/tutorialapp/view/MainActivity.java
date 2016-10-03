@@ -1,25 +1,18 @@
 package info.duhovniy.tutorialapp.view;
 
 import android.databinding.DataBindingUtil;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 
 import info.duhovniy.tutorialapp.R;
-import info.duhovniy.tutorialapp.databinding.ActivityMainBinding;
-import info.duhovniy.tutorialapp.model.FragmentModel;
-import info.duhovniy.tutorialapp.viewmodel.MainViewModel;
 import info.duhovniy.tutorialapp.SectionsPagerAdapter;
+import info.duhovniy.tutorialapp.databinding.ActivityMainBinding;
+import info.duhovniy.tutorialapp.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity implements MainViewModel.DataListener {
 
@@ -48,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Fetching data for fragments!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 mainViewModel.loadFragmentsFromFile();
             }
         });
@@ -59,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
     private void setViewPager() {
         // Set up the ViewPager with the sections adapter.
         binding.container.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(), mainViewModel));
-
         binding.tabs.setupWithViewPager(binding.container);
     }
 
@@ -88,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
 
     @Override
     public void onFragmentsChanged() {
+        Snackbar.make(binding.mainContent, "Data for fragments fetched!", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
         setViewPager();
     }
 
@@ -95,43 +87,5 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
     protected void onDestroy() {
         super.onDestroy();
         mainViewModel.destroy();
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION = "section";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(FragmentModel fragmentModel) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            if (fragmentModel != null) {
-                Bundle args = new Bundle();
-                args.putParcelable(ARG_SECTION, fragmentModel);
-                fragment.setArguments(args);
-            }
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            FragmentModel fm = getArguments().getParcelable(ARG_SECTION);
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(fm.getTitle());
-            return rootView;
-        }
     }
 }
