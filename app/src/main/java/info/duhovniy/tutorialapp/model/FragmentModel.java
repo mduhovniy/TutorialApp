@@ -1,11 +1,12 @@
 package info.duhovniy.tutorialapp.model;
 
+import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
 
-/**
- * Created by maximduhovniy on 01/10/2016.
- */
+import com.squareup.picasso.Picasso;
+
 
 public class FragmentModel implements Parcelable {
 
@@ -101,4 +102,12 @@ public class FragmentModel implements Parcelable {
         dest.writeString(detailDescription);
         dest.writeString(image);
     }
+
+    @BindingAdapter("bind:imageUrl")
+    public static void loadImage(ImageView view, String imageUrl) {
+        Picasso.with(view.getContext())
+                .load(imageUrl)
+                .into(view);
+    }
+
 }

@@ -31,4 +31,8 @@ public class MyApplication extends Application {
     public List<FragmentModel> restoreFragments() {
         return mFragments;
     }
+
+    public boolean isStoredFragments() {
+        return !mFragments.isEmpty();
+    }
 }

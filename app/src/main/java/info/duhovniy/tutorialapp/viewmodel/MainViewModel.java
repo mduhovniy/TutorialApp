@@ -1,6 +1,8 @@
 package info.duhovniy.tutorialapp.viewmodel;
 
 import android.content.Context;
+import android.databinding.ObservableInt;
+import android.view.View;
 
 import com.google.gson.Gson;
 
@@ -9,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import info.duhovniy.tutorialapp.MyApplication;
@@ -19,14 +20,14 @@ import info.duhovniy.tutorialapp.model.FragmentModel;
 
 public class MainViewModel {
 
-    private List<FragmentModel> fragments;
+    private List<FragmentModel> mFragments;
     private Context mContext;
     private DataListener mDataListener;
 
     public MainViewModel(Context context, DataListener dataListener) {
         mContext = context;
         mDataListener = dataListener;
-        fragments = MyApplication.get(mContext).restoreFragments();
+        mFragments = MyApplication.get(mContext).restoreFragments();
     }
 
     public void loadFragmentsFromFile() {
@@ -45,26 +46,32 @@ public class MainViewModel {
             in.close();
 
             FragmentModel[] tmp = gson.fromJson(String.valueOf(buf), FragmentModel[].class);
-            fragments = Arrays.asList(tmp);
+            mFragments = Arrays.asList(tmp);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        MyApplication.get(mContext).storeFragments(fragments);
+        if (mFragments != null) {
+            MyApplication.get(mContext).storeFragments(mFragments);
 
-        if (mDataListener != null)
-            mDataListener.onFragmentsChanged();
+            if (mDataListener != null)
+                mDataListener.onFragmentsChanged();
+        }
     }
 
-    public List<FragmentModel> getFragments() {
-        return fragments;
+    public FragmentModel getFragmentModel(int pos) {
+        return mFragments.get(pos);
     }
 
     public void destroy() {
-        fragments = null;
+        mFragments = null;
         mContext = null;
         mDataListener = null;
+    }
+
+    public int size() {
+        return mFragments.size();
     }
 
     public interface DataListener {

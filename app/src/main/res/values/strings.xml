@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TutorialApp</string>
     <string name="action_settings">Fetch Tutorial</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="json_static_source">tutorial.json</string>
+    <string name="fetched_snackbar">Data for fragments fetched!</string>
+    <string name="there_is_no_no_fragments_to_display">There is NO data to display!</string>
+    <string name="tutorial_not_fetched">Tutorial NOT fetched yet!</string>
 </resources>

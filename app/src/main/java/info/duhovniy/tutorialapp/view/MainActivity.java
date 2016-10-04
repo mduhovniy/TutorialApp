@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import info.duhovniy.tutorialapp.MyApplication;
 import info.duhovniy.tutorialapp.R;
 import info.duhovniy.tutorialapp.SectionsPagerAdapter;
 import info.duhovniy.tutorialapp.databinding.ActivityMainBinding;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
         setSupportActionBar(binding.toolbar);
 
         setViewPager();
+
+        if (MyApplication.get(this).isStoredFragments())
+            binding.placeholderText.setVisibility(View.GONE);
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +82,9 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
 
     @Override
     public void onFragmentsChanged() {
-        Snackbar.make(binding.mainContent, "Data for fragments fetched!", Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.mainContent, R.string.fetched_snackbar, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+        binding.placeholderText.setVisibility(View.GONE);
         setViewPager();
     }
 
