@@ -3,9 +3,13 @@ package info.duhovniy.tutorialapp.model;
 import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+
+import info.duhovniy.tutorialapp.R;
 
 
 public class FragmentModel implements Parcelable {
@@ -17,7 +21,8 @@ public class FragmentModel implements Parcelable {
     private String detailDescription;
     private String image;
 
-    public FragmentModel() {}
+    public FragmentModel() {
+    }
 
     protected FragmentModel(Parcel in) {
         type = in.readString();
@@ -103,11 +108,36 @@ public class FragmentModel implements Parcelable {
         dest.writeString(image);
     }
 
-    @BindingAdapter("bind:imageUrl")
+    @BindingAdapter({"imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
+        DisplayMetrics displayMetrics = view.getContext().getResources().getDisplayMetrics();
+        int dpHeight = displayMetrics.heightPixels;
+        int dpWidth = displayMetrics.widthPixels;
+        int size;
+        if (dpHeight > dpWidth)
+            size = dpWidth;
+        else
+            size = dpHeight;
+
         Picasso.with(view.getContext())
                 .load(imageUrl)
+                .placeholder(R.drawable.placeholder)
+                .resize(size, size)
+                .centerCrop()
                 .into(view);
+    }
+
+    public void onClickZoom(View view) {
+        // Set the IMMERSIVE flag.
+        // Set the content to appear under the system bars so that the content
+        // doesn't resize when the system bars hide and show.
+        view.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 
 }
