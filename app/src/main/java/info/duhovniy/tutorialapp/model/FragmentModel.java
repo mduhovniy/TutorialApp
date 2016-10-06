@@ -113,11 +113,7 @@ public class FragmentModel implements Parcelable {
         DisplayMetrics displayMetrics = view.getContext().getResources().getDisplayMetrics();
         int dpHeight = displayMetrics.heightPixels;
         int dpWidth = displayMetrics.widthPixels;
-        int size;
-        if (dpHeight > dpWidth)
-            size = dpWidth;
-        else
-            size = dpHeight;
+        int size = (dpHeight > dpWidth) ? dpWidth : dpHeight;
 
         Picasso.with(view.getContext())
                 .load(imageUrl)
