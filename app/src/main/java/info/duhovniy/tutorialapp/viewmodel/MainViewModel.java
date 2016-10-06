@@ -24,10 +24,17 @@ public class MainViewModel {
     private Context mContext;
     private DataListener mDataListener;
 
+    public ObservableInt placeholderVisibility;
+
     public MainViewModel(Context context, DataListener dataListener) {
         mContext = context;
         mDataListener = dataListener;
         mFragments = MyApplication.get(mContext).restoreFragments();
+        placeholderVisibility = new ObservableInt();
+        if(mFragments.isEmpty())
+            placeholderVisibility.set(View.VISIBLE);
+        else
+            placeholderVisibility.set(View.INVISIBLE);
     }
 
     public void loadFragmentsFromFile() {
@@ -52,12 +59,18 @@ public class MainViewModel {
             e.printStackTrace();
         }
 
-        if (mFragments != null) {
+        boolean isFetched = false;
+
+        if (!mFragments.isEmpty()) {
+            isFetched = true;
+
             MyApplication.get(mContext).storeFragments(mFragments);
 
-            if (mDataListener != null)
-                mDataListener.onFragmentsChanged();
+            placeholderVisibility.set(View.INVISIBLE);
         }
+
+        if (mDataListener != null)
+            mDataListener.onFragmentsChanged(isFetched);
     }
 
     public FragmentModel getFragmentModel(int pos) {
@@ -74,7 +87,11 @@ public class MainViewModel {
         return mFragments.size();
     }
 
+    public void onClickFetch(View view) {
+        loadFragmentsFromFile();
+    }
+
     public interface DataListener {
-        void onFragmentsChanged();
+        void onFragmentsChanged(boolean isSuccess);
     }
 }

@@ -34,21 +34,11 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainViewModel = new MainViewModel(this, this);
+        binding.setViewModel(mainViewModel);
 
         setSupportActionBar(binding.toolbar);
 
         setViewPager();
-
-        if (MyApplication.get(this).isStoredFragments())
-            binding.placeholderText.setVisibility(View.GONE);
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainViewModel.loadFragmentsFromFile();
-            }
-        });
-
     }
 
     private void setViewPager() {
@@ -81,11 +71,14 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
     }
 
     @Override
-    public void onFragmentsChanged() {
-        Snackbar.make(binding.mainContent, R.string.fetched_snackbar, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-        binding.placeholderText.setVisibility(View.GONE);
-        setViewPager();
+    public void onFragmentsChanged(boolean isFetched) {
+        if(isFetched) {
+            Snackbar.make(binding.mainContent, R.string.fetched_snackbar, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            setViewPager();
+        } else
+            Snackbar.make(binding.mainContent, R.string.not_fetched_snackbar, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
     }
 
     @Override

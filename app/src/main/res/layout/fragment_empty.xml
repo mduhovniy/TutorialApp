@@ -7,6 +7,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/there_is_no_no_fragments_to_display"
+        android:text="@string/no_fragments_to_display"
         android:textSize="20sp" />
 </RelativeLayout>
