@@ -3,14 +3,13 @@ package info.duhovniy.tutorialapp;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import info.duhovniy.tutorialapp.view.PlaceholderFragment;
 import info.duhovniy.tutorialapp.viewmodel.MainViewModel;
 
 /**
- * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+ * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {

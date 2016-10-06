@@ -19,15 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{data.previewDescription}"
-            tools:text="Preview description"
-            android:textSize="25sp"/>
+            android:textSize="25sp"
+            tools:text="Preview description" />
 
         <android.support.v7.widget.AppCompatImageButton
             android:layout_gravity="center"
-            app:imageUrl="@{data.image}"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:onClick="@{data.onClickZoom}"
+            app:imageUrl="@{data.image}"
             tools:src="@drawable/placeholder" />
 
     </LinearLayout>

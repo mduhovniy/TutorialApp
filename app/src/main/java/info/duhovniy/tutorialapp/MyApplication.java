@@ -10,12 +10,11 @@ import info.duhovniy.tutorialapp.model.FragmentModel;
 
 public class MyApplication extends Application {
 
-
-    //private Scheduler defaultScheduler;
+    //    private Scheduler defaultScheduler;
     private List<FragmentModel> mFragments = Collections.emptyList();
 
-    public static MyApplication get(Context contex) {
-        return (MyApplication) contex.getApplicationContext();
+    public static MyApplication get(Context context) {
+        return (MyApplication) context.getApplicationContext();
     }
 
 //    public Scheduler getDefaultScheduler() {
@@ -30,9 +29,5 @@ public class MyApplication extends Application {
 
     public List<FragmentModel> restoreFragments() {
         return mFragments;
-    }
-
-    public boolean isStoredFragments() {
-        return !mFragments.isEmpty();
     }
 }

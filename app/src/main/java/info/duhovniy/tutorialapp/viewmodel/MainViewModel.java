@@ -2,6 +2,7 @@ package info.duhovniy.tutorialapp.viewmodel;
 
 import android.content.Context;
 import android.databinding.ObservableInt;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -24,25 +25,25 @@ public class MainViewModel {
     private Context mContext;
     private DataListener mDataListener;
 
-    public ObservableInt placeholderVisibility;
+    public ObservableInt placeholdersVisibility;
 
     public MainViewModel(Context context, DataListener dataListener) {
         mContext = context;
         mDataListener = dataListener;
         mFragments = MyApplication.get(mContext).restoreFragments();
-        placeholderVisibility = new ObservableInt();
-        if(mFragments.isEmpty())
-            placeholderVisibility.set(View.VISIBLE);
+        placeholdersVisibility = new ObservableInt();
+        if (mFragments.isEmpty())
+            placeholdersVisibility.set(View.VISIBLE);
         else
-            placeholderVisibility.set(View.INVISIBLE);
+            placeholdersVisibility.set(View.INVISIBLE);
     }
 
-    public void loadFragmentsFromFile() {
+    private boolean loadFragmentsFromFile(String fileName) {
         Gson gson = new Gson();
 
         try {
             StringBuilder buf = new StringBuilder();
-            InputStream json = mContext.getAssets().open(mContext.getString(R.string.json_static_source));
+            InputStream json = mContext.getAssets().open(fileName);
             BufferedReader in = new BufferedReader(new InputStreamReader(json, "UTF-8"));
             String str;
 
@@ -66,11 +67,12 @@ public class MainViewModel {
 
             MyApplication.get(mContext).storeFragments(mFragments);
 
-            placeholderVisibility.set(View.INVISIBLE);
-        }
+            placeholdersVisibility.set(View.INVISIBLE);
 
-        if (mDataListener != null)
-            mDataListener.onFragmentsChanged(isFetched);
+            if (mDataListener != null)
+                mDataListener.onFragmentsChanged();
+        }
+        return isFetched;
     }
 
     public FragmentModel getFragmentModel(int pos) {
@@ -88,10 +90,13 @@ public class MainViewModel {
     }
 
     public void onClickFetch(View view) {
-        loadFragmentsFromFile();
+        if (loadFragmentsFromFile(mContext.getString(R.string.json_static_source)))
+            Snackbar.make((View) view.getParent(), R.string.fetched_snackbar, Snackbar.LENGTH_LONG).show();
+        else
+            Snackbar.make((View) view.getParent(), R.string.not_fetched_snackbar, Snackbar.LENGTH_LONG).show();
     }
 
     public interface DataListener {
-        void onFragmentsChanged(boolean isSuccess);
+        void onFragmentsChanged();
     }
 }

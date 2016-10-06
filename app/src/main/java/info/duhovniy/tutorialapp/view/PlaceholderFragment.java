@@ -13,9 +13,7 @@ import info.duhovniy.tutorialapp.databinding.FragmentImageBinding;
 import info.duhovniy.tutorialapp.databinding.FragmentTextBinding;
 import info.duhovniy.tutorialapp.model.FragmentModel;
 
-/**
- * A placeholder fragment containing creation of 2 types of new Fragment.
- */
+
 public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION = "section";
@@ -24,7 +22,7 @@ public class PlaceholderFragment extends Fragment {
     }
 
     /**
-     * Returns a new instance of this fragment for the given section
+     * Returns a new instance of this fragment for the given FragmentModel
      */
     public static PlaceholderFragment newInstance(FragmentModel fragmentModel) {
         PlaceholderFragment fragment = new PlaceholderFragment();
