@@ -38,6 +38,7 @@ public class MainViewModel {
             placeholdersVisibility.set(View.INVISIBLE);
     }
 
+    // TODO universal LoadManager with async and multiple model option
     private boolean loadFragmentsFromFile(String fileName) {
         Gson gson = new Gson();
 

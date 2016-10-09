@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">TutorialApp</string>
-    <string name="action_settings">Fetch Tutorial</string>
+    <string name="action_fetch">Fetch Tutorial</string>
     <string name="json_static_source">tutorial.json</string>
     <string name="fetched_snackbar">Data for fragments fetched!</string>
     <string name="not_fetched_snackbar">Some fetching problems:(</string>
     <string name="no_fragments_to_display">There is NO data to display!</string>
     <string name="tutorial_not_fetched">Tutorial NOT fetched yet!</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
