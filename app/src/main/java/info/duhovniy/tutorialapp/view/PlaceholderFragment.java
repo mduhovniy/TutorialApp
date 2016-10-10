@@ -42,7 +42,7 @@ public class PlaceholderFragment extends Fragment implements FragmentViewModel.F
                              Bundle savedInstanceState) {
         FragmentModel fm = getArguments().getParcelable(ARG_SECTION);
         View rootView;
-        if (fm.getType() == null) {
+        if (fm == null) {
             rootView = inflater.inflate(R.layout.fragment_empty, container, false);
             return rootView;
         }
@@ -69,13 +69,13 @@ public class PlaceholderFragment extends Fragment implements FragmentViewModel.F
     @Override
     public void onFullScreen(FragmentModel fragmentModel) {
         Intent intent = new Intent(getContext(), FullscreenActivity.class);
-        intent.putExtra(FullscreenActivity.EXTRA_IMAGE, fragmentModel.getImage());
+        intent.putExtra(FullscreenActivity.TAG, fragmentModel.getImage());
         getActivity().startActivity(intent);
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         fragmentViewModel.destroy();
-        super.onDestroy();
+        super.onDestroyView();
     }
 }
