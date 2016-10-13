@@ -9,10 +9,9 @@
             type="info.duhovniy.tutorialapp.view.FullscreenActivity" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:fitsSystemWindows="true">
 
         <ImageView
@@ -23,5 +22,5 @@
             app:bigImageUrl="@{viewModel.image}"
             tools:src="@drawable/placeholder" />
 
-    </LinearLayout>
+    </FrameLayout>
 </layout>
