@@ -20,17 +20,23 @@ import info.duhovniy.tutorialapp.databinding.ActivityFullscreenBinding;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
+    public static final String TITLE = "FullscreenActivity.Header";
+    public static final String IMAGE = "FullscreenActivity.Image";
     public static final String TAG = "FullscreenActivity";
     private ActivityFullscreenBinding binding;
     private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        image = getIntent().getStringExtra(TAG);
+        image = getIntent().getStringExtra(IMAGE);
+        String title = getIntent().getStringExtra(TITLE);
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fullscreen);
         binding.setViewModel(this);
+
+        if (title != null && getSupportActionBar() != null)
+            getSupportActionBar().setTitle(title);
 
         toggleHideyBar();
     }

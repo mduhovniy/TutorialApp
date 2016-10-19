@@ -69,7 +69,8 @@ public class PlaceholderFragment extends Fragment implements FragmentViewModel.F
     @Override
     public void onFullScreen(FragmentModel fragmentModel) {
         Intent intent = new Intent(getContext(), FullscreenActivity.class);
-        intent.putExtra(FullscreenActivity.TAG, fragmentModel.getImage());
+        intent.putExtra(FullscreenActivity.TITLE, fragmentModel.getTitle());
+        intent.putExtra(FullscreenActivity.IMAGE, fragmentModel.getImage());
         getActivity().startActivity(intent);
     }
 

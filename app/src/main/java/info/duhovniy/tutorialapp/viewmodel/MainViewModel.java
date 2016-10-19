@@ -41,6 +41,7 @@ public class MainViewModel {
     // TODO universal LoadManager with async and multiple model option
     private boolean loadFragmentsFromFile(String fileName) {
         Gson gson = new Gson();
+        boolean isFetched = false;
 
         try {
             StringBuilder buf = new StringBuilder();
@@ -61,12 +62,8 @@ public class MainViewModel {
             e.printStackTrace();
         }
 
-        boolean isFetched = false;
-
         if (!mFragments.isEmpty()) {
             isFetched = true;
-
-            MyApplication.get(mContext).storeFragments(mFragments);
 
             placeholdersVisibility.set(View.INVISIBLE);
 
@@ -91,9 +88,10 @@ public class MainViewModel {
     }
 
     public void onClickFetch(View view) {
-        if (loadFragmentsFromFile(mContext.getString(R.string.json_static_source)))
+        if (loadFragmentsFromFile(mContext.getString(R.string.json_static_source))) {
             Snackbar.make((View) view.getParent(), R.string.fetched_snackbar, Snackbar.LENGTH_LONG).show();
-        else
+            MyApplication.get(mContext).storeFragments(mFragments);
+        } else
             Snackbar.make((View) view.getParent(), R.string.not_fetched_snackbar, Snackbar.LENGTH_LONG).show();
     }
 
