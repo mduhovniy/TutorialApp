@@ -2,6 +2,7 @@ package info.duhovniy.tutorialapp.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
         int id = item.getItemId();
 
         if (id == R.id.action_fetch) {
-            mainViewModel.onClickFetch(binding.fab);
+            mainViewModel.loadFragmentsFromFile(getString(R.string.json_static_source));
             return true;
         }
 
@@ -56,8 +57,18 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.Dat
     }
 
     @Override
-    public void onFragmentsChanged() {
+    public void onFragmentsChanged(boolean isLocal) {
+        if (isLocal)
+            Snackbar.make(binding.container, R.string.fetched_from_file_snackbar, Snackbar.LENGTH_LONG).show();
+        else
+            Snackbar.make(binding.container, R.string.fetched_from_API_snackbar, Snackbar.LENGTH_LONG).show();
         setViewPager();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mainViewModel.saveState();
     }
 
     @Override

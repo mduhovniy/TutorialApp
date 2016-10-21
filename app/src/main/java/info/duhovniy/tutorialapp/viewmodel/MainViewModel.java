@@ -2,7 +2,6 @@ package info.duhovniy.tutorialapp.viewmodel;
 
 import android.content.Context;
 import android.databinding.ObservableInt;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -15,8 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import info.duhovniy.tutorialapp.MyApplication;
-import info.duhovniy.tutorialapp.R;
+import info.duhovniy.tutorialapp.model.ApiCallableInterface;
 import info.duhovniy.tutorialapp.model.FragmentModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MainViewModel {
@@ -39,9 +41,33 @@ public class MainViewModel {
     }
 
     // TODO universal LoadManager with async and multiple model option
-    private boolean loadFragmentsFromFile(String fileName) {
+    private void loadFragmentsFromApi() {
+        ApiCallableInterface apiCallableInterface = MyApplication.get(mContext).getApiCallableInterface();
+
+        Call<List<FragmentModel>> call = apiCallableInterface.getAllFragments();
+        call.enqueue(new Callback<List<FragmentModel>>() {
+            @Override
+            public void onResponse(Call<List<FragmentModel>> call, Response<List<FragmentModel>> response) {
+                int statusCode = response.code();
+                if (statusCode == 200) {
+                    mFragments = response.body();
+
+                    placeholdersVisibility.set(View.INVISIBLE);
+
+                    if (mDataListener != null)
+                        mDataListener.onFragmentsChanged(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FragmentModel>> call, Throwable t) {
+                // Log error here since request failed
+            }
+        });
+    }
+
+    public void loadFragmentsFromFile(String fileName) {
         Gson gson = new Gson();
-        boolean isFetched = false;
 
         try {
             StringBuilder buf = new StringBuilder();
@@ -63,18 +89,20 @@ public class MainViewModel {
         }
 
         if (!mFragments.isEmpty()) {
-            isFetched = true;
-
             placeholdersVisibility.set(View.INVISIBLE);
 
             if (mDataListener != null)
-                mDataListener.onFragmentsChanged();
+                mDataListener.onFragmentsChanged(true);
         }
-        return isFetched;
     }
 
     public FragmentModel getFragmentModel(int pos) {
         return mFragments.get(pos);
+    }
+
+    public void saveState() {
+        if (mFragments != null)
+            MyApplication.get(mContext).storeFragments(mFragments);
     }
 
     public void destroy() {
@@ -88,14 +116,10 @@ public class MainViewModel {
     }
 
     public void onClickFetch(View view) {
-        if (loadFragmentsFromFile(mContext.getString(R.string.json_static_source))) {
-            Snackbar.make((View) view.getParent(), R.string.fetched_snackbar, Snackbar.LENGTH_LONG).show();
-            MyApplication.get(mContext).storeFragments(mFragments);
-        } else
-            Snackbar.make((View) view.getParent(), R.string.not_fetched_snackbar, Snackbar.LENGTH_LONG).show();
+        loadFragmentsFromApi();
     }
 
     public interface DataListener {
-        void onFragmentsChanged();
+        void onFragmentsChanged(boolean isLocal);
     }
 }

@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">TutorialApp</string>
-    <string name="action_fetch">Fetch Tutorial</string>
+    <string name="action_fetch">Fetch Tutorial Locally</string>
     <string name="json_static_source">tutorial.json</string>
     <string name="fetched_snackbar">Data for fragments fetched!</string>
     <string name="not_fetched_snackbar">Some fetching problems:(</string>
+    <string name="fetched_from_file_snackbar">Data fetched from file!</string>
+    <string name="fetched_from_API_snackbar">Data fetched from API!</string>
     <string name="no_fragments_to_display">There is NO data to display!</string>
     <string name="tutorial_not_fetched">Tutorial NOT fetched yet!</string>
 
