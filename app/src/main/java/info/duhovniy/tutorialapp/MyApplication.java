@@ -8,8 +8,8 @@ import java.util.List;
 
 import info.duhovniy.tutorialapp.model.ApiCallableInterface;
 import info.duhovniy.tutorialapp.model.FragmentModel;
-import rx.Scheduler;
-import rx.schedulers.Schedulers;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 
 public class MyApplication extends Application {
 
@@ -21,6 +21,7 @@ public class MyApplication extends Application {
         return (MyApplication) context.getApplicationContext();
     }
 
+    // use for RX implementation
     public Scheduler getDefaultScheduler() {
         if (defaultScheduler == null)
             defaultScheduler = Schedulers.io();

@@ -1,6 +1,4 @@
 apply plugin: 'com.android.application'
-// included plugin for Lambda expression
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -10,7 +8,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -22,7 +20,7 @@ android {
     dataBinding {
         enabled = true
     }
-    // included options for Lambda expression
+    // included Java 8 options for Lambda expression
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -35,20 +33,33 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:design:25.0.0'
-    compile 'com.android.support:support-v4:25.0.0'
+    // Android native design libraries
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:design:25.1.1'
+    compile 'com.android.support:support-v4:25.1.1'
 
+    // JSON parser
     compile 'com.google.code.gson:gson:2.6.2'
 
+    // Picasso image processor
     compile 'com.squareup.picasso:picasso:2.5.2'
 
+    // Retrofit API consumer
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    //compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
+    // RxAndroid + RxJava
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+
+    // Epoxy RecyclerView library & annotation processor
+    compile 'com.airbnb.android:epoxy:1.5.0'
+    annotationProcessor 'com.airbnb.android:epoxy-processor:1.5.0'
 
     testCompile 'junit:junit:4.12'
 }
+
+// included plugin for Lambda expression
+apply plugin: 'me.tatarka.retrolambda'

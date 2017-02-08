@@ -27,7 +27,7 @@ public class MainViewModel {
     private Context mContext;
     private DataListener mDataListener;
 
-    public ObservableInt placeholdersVisibility;
+    public final ObservableInt placeholdersVisibility;
 
     public MainViewModel(Context context, DataListener dataListener) {
         mContext = context;
