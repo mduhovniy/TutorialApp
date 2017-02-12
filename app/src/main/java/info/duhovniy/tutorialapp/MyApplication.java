@@ -6,7 +6,7 @@ import android.content.Context;
 import java.util.Collections;
 import java.util.List;
 
-import info.duhovniy.tutorialapp.model.ApiCallableInterface;
+import info.duhovniy.tutorialapp.model.ApiCallable;
 import info.duhovniy.tutorialapp.model.FragmentModel;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
@@ -15,7 +15,7 @@ public class MyApplication extends Application {
 
     private Scheduler defaultScheduler;
     private List<FragmentModel> mFragments = Collections.emptyList();
-    private ApiCallableInterface apiCallableInterface;
+    private ApiCallable apiCallable;
 
     public static MyApplication get(Context context) {
         return (MyApplication) context.getApplicationContext();
@@ -28,10 +28,10 @@ public class MyApplication extends Application {
         return defaultScheduler;
     }
 
-    public ApiCallableInterface getApiCallableInterface() {
-        if (apiCallableInterface == null)
-            apiCallableInterface = ApiCallableInterface.Factory.create();
-        return apiCallableInterface;
+    public ApiCallable getApiCallable() {
+        if (apiCallable == null)
+            apiCallable = ApiCallable.Factory.create();
+        return apiCallable;
     }
 
     public void storeFragments(List<FragmentModel> fragments) {

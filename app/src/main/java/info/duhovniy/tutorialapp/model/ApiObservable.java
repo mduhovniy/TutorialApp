@@ -5,29 +5,30 @@ import android.util.Base64;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface ApiCallableInterface {
+public interface ApiObservable {
+
 
     String BASE_URL = "http://duhovniy.info";
     String USER = "maxim";
     String PASS = "12345";
 
     @GET("api/fragments")
-    Call<List<FragmentModel>> getAllFragments();
+    Observable<List<FragmentModel>> getAllFragments();
 
     @GET("api/fragments/{id}")
-    Call<FragmentModel> getFragmentById(@Path("id") int id);
+    Observable<FragmentModel> getFragmentById(@Path("id") int id);
 
     class Factory {
-        public static ApiCallableInterface create() {
+        public static ApiCallable create() {
             String credentials = USER + ":" + PASS;
             final String basic =
                     "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
@@ -52,7 +53,7 @@ public interface ApiCallableInterface {
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();
-            return retrofit.create(ApiCallableInterface.class);
+            return retrofit.create(ApiCallable.class);
         }
     }
 }

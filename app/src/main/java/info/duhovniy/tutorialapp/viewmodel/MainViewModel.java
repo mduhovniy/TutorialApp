@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import info.duhovniy.tutorialapp.MyApplication;
-import info.duhovniy.tutorialapp.model.ApiCallableInterface;
+import info.duhovniy.tutorialapp.model.ApiCallable;
 import info.duhovniy.tutorialapp.model.FragmentModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,9 +42,9 @@ public class MainViewModel {
 
     // TODO universal LoadManager with async and multiple model option
     private void loadFragmentsFromApi() {
-        ApiCallableInterface apiCallableInterface = MyApplication.get(mContext).getApiCallableInterface();
+        ApiCallable apiCallable = MyApplication.get(mContext).getApiCallable();
 
-        Call<List<FragmentModel>> call = apiCallableInterface.getAllFragments();
+        Call<List<FragmentModel>> call = apiCallable.getAllFragments();
         call.enqueue(new Callback<List<FragmentModel>>() {
             @Override
             public void onResponse(Call<List<FragmentModel>> call, Response<List<FragmentModel>> response) {
